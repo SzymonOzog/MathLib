@@ -6,16 +6,15 @@
 namespace MathLib
 {
 	template <class T>
-	void fillVector(std::vector<T> &toFill, T destinedSize);
+	void fillVector(MathLib::Vector<T>&&toFill, T destinedSize);
 	template <class T>
 	std::vector<T> getSmaller(const std::vector<T> &vec1, const std::vector<T> &vec2);
 
 	//IMPLEMENTATNIONS ------------------------------------------------------------
 	template <class T>
-	void fillVector(std::vector<T>& toFill, T destinedSize)
+	void fillVector(MathLib::Vector<T>& toFill, int destinedSize)
 	{
-		int i = destinedSize - toFill.size();
-		while (i--)
+		while (toFill.size()!=destinedSize)
 			toFill.push_back(0);
 	}
 	template <class T>

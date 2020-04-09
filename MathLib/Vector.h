@@ -1,37 +1,67 @@
 #pragma once
 #include <vector>
 #include <cmath>
+#include <algorithm>
 #include "MathLib.h"
 namespace MathLib 
 {
 	template <class T>
-	class Vector
+	class Vector 
 	{
 	public:
+		using iterator = typename std::vector<T>::iterator;
+		using const_iterator = typename std::vector<T>::const_iterator;
+
 		Vector(std::vector<T> coords) : _coords(coords) {}
 		T length();
 		Vector normalise();
-		std::vector<T>& getCoords();
-		bool operator == (const Vector& otherVec);
-		Vector<T> operator + (const Vector& otherVec);
-		Vector<T> operator - (const Vector& otherVec);
-		Vector<T> operator * (const T& scalar);
-		Vector<T> operator / (const T& scalar);
-		Vector<T> operator += (const Vector& otherVec);
-		Vector<T> operator -= (const Vector& otherVec);
-		Vector<T> operator *= (const T& scalar);
-		Vector<T> operator /= (const T& scalar);
+
+		int size() const { return _coords.size(); }
+		void push_back(T x) { _coords.push_back(x); }
+		iterator begin() { return _coords.begin(); }
+		iterator end() { return _coords.end(); }
+		const_iterator begin() const { return _coords.begin(); }
+		const_iterator end() const { return _coords.end(); }
+
+		T& operator [](size_t i) { return _coords[i]; }
+		const T& operator [](size_t i) const { return _coords[i]; }
+		bool operator == (const Vector<T>& rhs)
+		{
+			if (this->size() != rhs.size())
+				return false;
+			for (int i = 0; i < rhs.size(); i++)
+				if ((*this)[i] != rhs[i])
+					return false;
+			return true;
+		}
+		bool operator != (const Vector<T>& rhs) { return !((*this) == rhs); }
+		Vector<T> operator + (const Vector& rhs) { Vector<T> vec = *this; return vec += rhs;}
+		Vector<T> operator - (const Vector& rhs) { Vector<T> vec = *this; return vec -= rhs; }
+		Vector<T> operator * (const T& scalar) { Vector<T> vec = *this; return vec *= scalar; }
+		Vector<T> operator / (const T& scalar) { Vector<T> vec = *this; return vec /= scalar; }
+		Vector<T> operator += (const Vector& rhs)
+		{
+			if (this->size() < rhs.size())
+				MathLib::fillVector((*this), rhs.size());
+			std::transform(rhs.begin(), rhs.end(), this->begin(), this->begin(), [](T x, T y) {return x + y;});
+			return *this;
+		}
+		Vector<T> operator -= (const Vector& rhs)
+		{
+			if (this->size() < rhs.size())
+				MathLib::fillVector((*this), rhs.size());
+			std::transform(rhs.begin(), rhs.end(), this->begin(), this->begin(), [](T x, T y) {return y - x;});
+			return *this;
+		}
+		Vector<T> operator *= (const T& scalar) { std::transform(this->begin(), this->end(), this->begin(), [scalar](T x) {return x * scalar;}); return *this; }
+		Vector<T> operator /= (const T& scalar) { std::transform(this->begin(), this->end(), this->begin(), [scalar](T x) {return x / scalar;}); return *this; }
 
 	private:
 		std::vector<T> _coords;
 	};
 
 	//IMPLEMENTATIONS ------------------------------------------------------
-	//template <class T>
-	//Vector<T>::Vector(std::vector<T> coords)
-	//{
-	//	_coords = coords;
-	//}
+
 	template <class T>
 	Vector<T> Vector<T>::normalise()
 	{
@@ -49,48 +79,4 @@ namespace MathLib
 			sqSum += c * c;
 		return sqrt(sqSum);
 	}
-	template <class T>
-	std::vector<T>& Vector<T>::getCoords()
-	{
-		return _coords;
-	}
-
-	//OPERATORS-------------------------------------------------------------
-	template <class T>
-	bool Vector<T>::operator == (const Vector<T>& otherVec)
-	{
-		if (this->_coords.size() != otherVec._coords.size())
-			return false;
-		for (int i = 0; i = otherVec._coords.size(); i++)
-			if (this->_coords[i] != otherVec._coords[i])
-				return false;
-		return true;
-	}
-
-	template <class T>
-	Vector<T> Vector<T>::operator + (const Vector<T>& otherVec)
-	{
-		std::vector<T> vec;
-		int n = this->_coords.size() - otherVec._coords.size();
-		if (this->_coords.size() != otherVec._coords.size())
-			MathLib::fillVector(MathLib::getSmaller(this->_coords, otherVec._coords), std::abs(n));
-		for (int i = 0; i < otherVec._coords.size(); i++)
-			vec.push_back(this->_coords[i] + otherVec._coords[i]);
-		return Vector<T>(vec);
-	}
-	
-	//template <class T>
-	//Vector<T> operator - (Vector<T> otherVec);
-	//template <class T>
-	//Vector<T> operator * (T scalar);
-	/*template <class T>*/
-	//Vector<T> operator / (T scalar);
-	//template <class T>
-	//Vector<T> operator += (Vector<T> otherVec);
-	//template <class T>
-	//Vector<T> operator -= (Vector<T> otherVec);
-	//template <class T>
-	//Vector<T> operator *= (T scalar);
-	//template <class T>
-	//Vector<T> operator /= (T scalar);
 }
