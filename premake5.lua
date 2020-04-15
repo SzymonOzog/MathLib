@@ -1,6 +1,6 @@
 workspace "MathLib"
 	architecture "x64"
-	startup "MathLibTest"
+	startproject "MathLibTest"
 	configurations {"Debug", "Release"}
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
