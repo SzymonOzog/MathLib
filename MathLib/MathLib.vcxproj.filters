@@ -24,6 +24,9 @@
     <ClInclude Include="DynamicVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Static3Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Point.cpp">

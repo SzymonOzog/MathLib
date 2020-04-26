@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include "DynamicVector.h"
+#include "Static3Vector.h"
 
 namespace MathLib
 {
