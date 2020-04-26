@@ -18,10 +18,10 @@
     <ClInclude Include="Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector.h">
+    <ClInclude Include="MathLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MathLib.h">
+    <ClInclude Include="DynamicVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
