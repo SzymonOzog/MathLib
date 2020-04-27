@@ -86,14 +86,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="MathLib.h" />
-    <ClInclude Include="Point.h" />
     <ClInclude Include="DynamicVector.h" />
     <ClInclude Include="Static3Vector.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="MathLib.cpp" />
-    <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

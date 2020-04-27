@@ -7,7 +7,7 @@
 namespace MathLib
 {
 	template <class T>
-	void fillDynamicVector(DynamicVector<T>&&toFill, T destinedSize);
+	void fillDynamicVector(DynamicVector<T>& toFill, int destinedSize);
 	template <class T>
 	DynamicVector<T> getSmaller(const DynamicVector<T>& vec1, const DynamicVector<T>& vec2);
 
@@ -33,6 +33,15 @@ namespace MathLib
 			dotProd += v1[i] * v2[i];
 			return dotProd;
 	}
+	template <class T>
+	T dotProduct(Static3Vector<T>& v1, Static3Vector<T>& v2)
+	{
+		return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
+	}
+	template <class T>
+	Static3Vector<T> crossProduct(Static3Vector<T>& v1, Static3Vector<T>& v2)
+	{
+		return Static3Vector<T>((v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x));
+	}
 
 }
-

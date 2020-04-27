@@ -18,11 +18,24 @@
 		EXPECT_TRUE(MathLib::getSmaller(vec1, vec2) == vec1);
 	}
 
-	TEST(MathLibTests, dotProd)
+	TEST(MathLibTests, dotProdDynamic)
 	{
 		MathLib::DynamicVector<int> vec1({ 1,2,6 });
 		MathLib::DynamicVector<int> vec2({ 3,2 });
 		EXPECT_EQ(MathLib::dotProduct(vec1, vec2), 7);
+	}
+	TEST(MathLibTests, dotProdStatic)
+	{
+		MathLib::Static3Vector<int> vec1({ 1,2,6 });
+		MathLib::Static3Vector<int> vec2({ 3,2,1 });
+		EXPECT_EQ(MathLib::dotProduct(vec1, vec2), 13);
+	}
+	TEST(MathLibTests, crossProdStatic)
+	{
+		MathLib::Static3Vector<int> vec1({ 1,0,0 });
+		MathLib::Static3Vector<int> vec2({ 0,1,0 });
+		MathLib::Static3Vector<int> vec3({ 0,0,1 });
+		EXPECT_TRUE(MathLib::crossProduct(vec1, vec2) == vec3);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,4 +206,21 @@
 		MathLib::Static3Vector<int> vec2({ 1,2,3 });
 		vec1 /= 2;
 		EXPECT_TRUE(vec1 == vec2);
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//STATIC 3 VECTOR FUNCTIONS TESTS//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TEST(Static3VectorFunctionsTests, Length)
+	{
+		MathLib::Static3Vector<int> vec1({ 1, 0, 0 });
+		MathLib::Static3Vector<int> vec2({ 6,8,0 });
+		EXPECT_EQ(vec1.length(), 1);
+		EXPECT_EQ(vec2.length(), 10);
+	}
+	TEST(Static3VectorFunctionsTests, Normalise)
+	{
+		MathLib::Static3Vector<int> vec1({ 6,8,10 });
+		double normalisedLength = vec1.normalise().length();
+		EXPECT_TRUE(normalisedLength > 0.95 && normalisedLength < 1.05);
 	}
