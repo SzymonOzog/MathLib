@@ -9,19 +9,16 @@ namespace MathLib
 	class DynamicVector 
 	{
 	public:
-		using iterator = typename std::vector<T>::iterator;
-		using const_iterator = typename std::vector<T>::const_iterator;
-
 		DynamicVector(std::vector<T> coords) : _coords(coords) {}
 		T length();
 		DynamicVector <double> normalise();
 
 		size_t size() const { return _coords.size(); }
 		void push_back(T x) { _coords.push_back(x); }
-		iterator begin() { return _coords.begin(); }
-		iterator end() { return _coords.end(); }
-		const_iterator begin() const { return _coords.begin(); }
-		const_iterator end() const { return _coords.end(); }
+		auto begin() { return _coords.begin(); }
+		auto end() { return _coords.end(); }
+		auto begin() const { return _coords.begin(); }
+		auto end() const { return _coords.end(); }
 
 		T& operator [](size_t i) { return _coords[i]; }
 		const T& operator [](size_t i) const { return _coords[i]; }
