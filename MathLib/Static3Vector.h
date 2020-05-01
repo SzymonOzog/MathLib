@@ -9,7 +9,7 @@ namespace MathLib {
 		Static3Vector() : m_coords{ 0, 0, 0 } {}
 		Static3Vector(T x, T y, T z) : m_coords{ x, y, z } {}
 		Static3Vector(const Static3Vector& v) : m_coords{v[0], v[1], v[2]} {}
-
+		~Static3Vector() = default;
 		//functions------------------------------------------------------------------------------------------------------------------------------------------------------------
 		T length();
 		Static3Vector<double> normalise();

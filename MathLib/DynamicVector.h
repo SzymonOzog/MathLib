@@ -12,6 +12,7 @@ namespace MathLib
 		DynamicVector(std::vector<T> coords) : _coords(coords) {}
 		T length();
 		DynamicVector <double> normalise();
+		~DynamicVector() = default;
 
 		size_t size() const { return _coords.size(); }
 		void push_back(T x) { _coords.push_back(x); }
