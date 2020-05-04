@@ -5,13 +5,13 @@ namespace MathLib {
 	class Static3Vector
 	{
 	public:
-		//constructors-------------------------------------------------------------------------------------------------------------------------------------------------------------
-		Static3Vector() : m_coords{ 0, 0, 0 } {}
+		//constructors---------------------------------------------------------------------------------------------------------------------------------------------------------
+		Static3Vector() : m_coords{ (T)0, (T)0, (T)0 } {}
 		Static3Vector(T x, T y, T z) : m_coords{ x, y, z } {}
 		Static3Vector(const Static3Vector& v) : m_coords{v[0], v[1], v[2]} {}
 		~Static3Vector() = default;
 		//functions------------------------------------------------------------------------------------------------------------------------------------------------------------
-		T length();
+		double length();
 		Static3Vector<double> normalise();
 		size_t size() { return sizeof(m_coords) / sizeof(m_coords[0]); }
 
@@ -39,11 +39,11 @@ namespace MathLib {
 	private:
 		T m_coords[3];
 	};
-	//function declatations----------------------------------------------------------------------------------------------------------------------------------------------------
+	//function implementations-------------------------------------------------------------------------------------------------------------------------------------------------
 	template <class T>
-	T Static3Vector<T>::length() 
+	double Static3Vector<T>::length() 
 	{ 
-		T l = 0; 
+		double l = 0; 
 		for (int i = 0; i < this->size(); i++) 
 			l += (*this)[i] * (*this)[i]; 
 		return sqrt(l); 
