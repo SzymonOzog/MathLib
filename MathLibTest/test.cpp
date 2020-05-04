@@ -224,3 +224,116 @@
 		double normalisedLength = vec1.normalise().length();
 		EXPECT_TRUE(normalisedLength > 0.95 && normalisedLength < 1.05);
 	}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//MATRIX 3X3 OPERATOR TESTS////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	TEST(Matrix3x3OperatorTests, Equal)
+	{
+		MathLib::Static3Vector v1(3, 4, 5);
+		MathLib::Static3Vector v2(5, 4, 5);
+		MathLib::Static3Vector v3(3, 4, 5);
+
+		MathLib::Matrix3x3 m1(v1, v2, v3);
+		v2 = { 0,0,0 };
+		MathLib::Matrix3x3 m2(v1, v2, v3);
+		EXPECT_TRUE(m1 == m1);
+		EXPECT_TRUE(m1 != m2);
+	}
+
+	TEST(Matrix3x3OperatorTests, Multiplication)
+	{
+		MathLib::Static3Vector v1(3, 4, 5);
+		MathLib::Static3Vector v2(3, 4, 5);
+		MathLib::Static3Vector v3(3, 4, 5);
+
+		MathLib::Matrix3x3 m1(v1, v2, v3);
+		MathLib::Matrix3x3 mMul(v1 * 7, v2 * 7, v3 * 7);
+
+		MathLib::Static3Vector vM = v1 * m1;
+		MathLib::Static3Vector vMul(36, 48, 60);
+
+		MathLib::Matrix3x3 m2 = m1 * m1;
+		MathLib::Matrix3x3 mMul2(vMul, vMul, vMul);
+		m1 =m1 * 7;
+		EXPECT_TRUE(m1 == mMul);
+		EXPECT_TRUE(vM == vMul);
+		EXPECT_TRUE(m2 == mMul2);
+	}
+	TEST(Matrix3x3OperatorTests, MultiplicationAssignment)
+	{
+		MathLib::Matrix3x3 m1(1);
+		MathLib::Matrix3x3 MMul(7);
+		m1 *= 7;
+		EXPECT_TRUE(m1==MMul);
+	}
+	TEST(Matrix3x3OperatorTests, Addition)
+	{
+		MathLib::Static3Vector v1(3, 4, 5);
+		MathLib::Static3Vector v2(5, 4, 5);
+		MathLib::Static3Vector v3(3, 4, 5);
+		MathLib::Matrix3x3 m1(v1, v2, v3);
+		MathLib::Matrix3x3 m2(v1, v2, v3);
+		MathLib::Matrix3x3 mAdd(v1 * 2, v2 * 2, v3 * 2);
+		m1 = m1 + m2;
+		EXPECT_TRUE(mAdd==m1);
+	}
+	TEST(Matrix3x3OperatorTests, AdditionAssignment)
+	{
+		MathLib::Static3Vector v1(3, 4, 5);
+		MathLib::Static3Vector v2(5, 4, 5);
+		MathLib::Static3Vector v3(3, 4, 5);
+		MathLib::Matrix3x3 m1(v1, v2, v3);
+		MathLib::Matrix3x3 mAdd(v1 * 2, v2 * 2, v3 * 2);
+		m1 += m1;
+		EXPECT_TRUE(m1==mAdd);
+	}
+	TEST(Matrix3x3OperatorTests, Subtraction)
+	{
+		MathLib::Static3Vector v1(3, 4, 5);
+		MathLib::Static3Vector v2(5, 4, 5);
+		MathLib::Static3Vector v3(3, 4, 5);
+		MathLib::Matrix3x3 m1(v1, v2, v3);
+		MathLib::Matrix3x3 m2(v1, v2, v3);
+		MathLib::Matrix3x3<int> mSub;
+		m1 = m1 - m2;
+		EXPECT_TRUE(mSub==m1);
+	}
+	TEST(Matrix3x3OperatorTests, SubtractionAssignment)
+	{
+		MathLib::Static3Vector v1(3, 4, 5);
+		MathLib::Static3Vector v2(5, 4, 5);
+		MathLib::Static3Vector v3(3, 4, 5);
+		MathLib::Matrix3x3 m1(v1, v2, v3);
+		MathLib::Matrix3x3<int> mSub;
+		m1 -= m1;
+		EXPECT_TRUE(m1==mSub);
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//MATRIX 3X3 FUNCTION TESTS////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	TEST(Matrix3x3FunctionTests, Determinant )
+	{
+		MathLib::Static3Vector v1(2, -3, 1);
+		MathLib::Static3Vector v2(2, 0, -1);
+		MathLib::Static3Vector v3(1, 4, 5);
+		MathLib::Matrix3x3 m1(v1, v2, v3);
+		MathLib::Matrix3x3 m2(1);
+		EXPECT_TRUE(m1.determinant() == 49);
+		EXPECT_TRUE(m2.determinant() == 1);
+
+	}
+	TEST(Matrix3x3FunctionTests, Transpose)
+	{
+		MathLib::Static3Vector v1(1, 2, 3);
+		MathLib::Static3Vector v2(4, 5, 6);
+		MathLib::Static3Vector v3(7, 8, 9);
+		MathLib::Matrix3x3 m1(v1, v2, v3);
+		MathLib::Static3Vector v4(1, 4, 7);
+		MathLib::Static3Vector v5(2, 5, 8);
+		MathLib::Static3Vector v6(3, 6, 9);
+		MathLib::Matrix3x3 m2(v4, v5, v6);
+		m1.transpose();
+		EXPECT_TRUE(m1 == m2);
+	}

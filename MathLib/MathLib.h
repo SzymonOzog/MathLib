@@ -2,8 +2,7 @@
 #include <vector>
 #include <cmath>
 #include "DynamicVector.h"
-#include "Static3Vector.h"
-
+#include "Matrix3x3.h"
 namespace MathLib
 {
 	template <class T>
@@ -36,12 +35,12 @@ namespace MathLib
 	template <class T>
 	T dotProduct(Static3Vector<T>& v1, Static3Vector<T>& v2)
 	{
-		return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
+		return (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]);
 	}
 	template <class T>
 	Static3Vector<T> crossProduct(Static3Vector<T>& v1, Static3Vector<T>& v2)
 	{
-		return Static3Vector<T>((v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x));
+		return Static3Vector<T>((v1[1] * v2[2]) - (v1[2] * v2[1]), (v1[2] * v2[0]) - (v1[0] * v2[2]), (v1[0] * v2[1]) - (v1[1] * v2[0]));
 	}
 
 }
