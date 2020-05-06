@@ -9,25 +9,31 @@ namespace MathLib
 	class DynamicVector 
 	{
 	public:
-		DynamicVector(std::vector<T> coords) : _coords(coords) {}
-		T length();
-		DynamicVector <double> normalise();
+		DynamicVector() = default;
+		DynamicVector(std::vector<T> coords) : m_coords(coords) {}
 		~DynamicVector() = default;
 
-		size_t size() const { return _coords.size(); }
-		void push_back(T x) { _coords.push_back(x); }
-		auto begin() { return _coords.begin(); }
-		auto end() { return _coords.end(); }
-		auto begin() const { return _coords.begin(); }
-		auto end() const { return _coords.end(); }
+		double length();
+		DynamicVector <double> normalise();
 
-		T& operator [](size_t i) { return _coords[i]; }
-		const T& operator [](size_t i) const { return _coords[i]; }
+		size_t size() const { return m_coords.size(); }
+		void push_back(T x) { m_coords.push_back(x); }
+		auto begin() { return m_coords.begin(); }
+		auto end() { return m_coords.end(); }
+		auto rbegin() { return m_coords.rbegin(); }
+		auto rend() { return m_coords.rend(); }
+		
+		auto begin() const { return m_coords.begin(); }
+		auto end() const { return m_coords.end(); }
+		auto rbegin() const{ return m_coords.rbegin(); }
+		auto rend() const{ return m_coords.rend(); }
+
+		T& operator [](size_t i) { return m_coords[i]; }
 		bool operator == (const DynamicVector<T>& rhs)
 		{
 			if (this->size() != rhs.size())
 				return false;
-			for (int i = 0; i < rhs.size(); i++)
+			for (size_t i = 0; i < rhs.size(); i++)
 				if ((*this)[i] != rhs[i])
 					return false;
 			return true;
@@ -53,9 +59,25 @@ namespace MathLib
 		}
 		DynamicVector<T> operator *= (const T& scalar) { std::transform(this->begin(), this->end(), this->begin(), [scalar](T x) {return x * scalar;}); return *this; }
 		DynamicVector<T> operator /= (const T& scalar) { std::transform(this->begin(), this->end(), this->begin(), [scalar](T x) {return x / scalar;}); return *this; }
+		
+		const T& operator [](size_t i) const { return m_coords[i]; }		
+		bool operator == (const DynamicVector<T>& rhs) const
+		{
+			if (this->size() != rhs.size())
+				return false;
+			for (size_t i = 0; i < rhs.size(); i++)
+				if ((*this)[i] != rhs[i])
+					return false;
+			return true;
+		}
+		bool operator != (const DynamicVector<T>& rhs)				 const { return !((*this) == rhs); }
+		const DynamicVector<T> operator + (const DynamicVector& rhs) const { DynamicVector<T> vec = *this; return vec += rhs; }
+		const DynamicVector<T> operator - (const DynamicVector& rhs) const { DynamicVector<T> vec = *this; return vec -= rhs; }
+		const DynamicVector<T> operator * (const T& scalar)		     const { DynamicVector<T> vec = *this; return vec *= scalar; }
+		const DynamicVector<T> operator / (const T& scalar)		     const { DynamicVector<T> vec = *this; return vec /= scalar; }
 
 	private:
-		std::vector<T> _coords;
+		std::vector<T> m_coords;
 	};
 
 	//IMPLEMENTATIONS ------------------------------------------------------
@@ -65,16 +87,16 @@ namespace MathLib
 	{
 		T length = this->length();
 		std::vector<double> vec;
-		for (auto c : _coords)
+		for (auto c : m_coords)
 			vec.push_back((double)c / length);
 		return DynamicVector<double>(vec);
 	}
 	template <class T>
-	T DynamicVector<T>::length()
+	double DynamicVector<T>::length()
 	{
-		T sqSum = 0;
-		for (auto c : _coords)
-			sqSum += c * c;
+		double sqSum = 0;
+		for (auto c : m_coords)
+			sqSum += (double)c * (double)c;
 		return sqrt(sqSum);
 	}
 }

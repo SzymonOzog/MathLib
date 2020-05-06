@@ -31,7 +31,7 @@ namespace MathLib
 		Matrix3x3&		  operator += (const Matrix3x3& rhs) { for (int i = 0; i < this->size(); i++) (*this)[i] += rhs[i]; return *this; }
 		Matrix3x3&		  operator -= (const Matrix3x3& rhs) { for (int i = 0; i < this->size(); i++) (*this)[i] -= rhs[i]; return *this; }
 		Matrix3x3&		  operator *= (const T& rhs) 		 { for (int i = 0; i < this->size(); i++) (*this)[i] *= rhs;	return *this; }
-		Matrix3x3&		  operator /= (const T& rhs)		 { for (int i = 0; i < this->size(); i++) (*this)[i] /= rhs; return *this; }
+		Matrix3x3&		  operator /= (const T& rhs)		 { for (int i = 0; i < this->size(); i++) (*this)[i] /= rhs;	return *this; }
 		Matrix3x3		  operator -  (const Matrix3x3& rhs) { Matrix3x3 m(*this); m -= rhs; return m; }
 		Matrix3x3		  operator *  (const T& rhs)		 { Matrix3x3 m(*this); m *= rhs; return m; }
 		Matrix3x3		  operator *  (const Matrix3x3& rhs) { Matrix3x3 m((*this)[0] * rhs, (*this)[1] * rhs, (*this)[2] * rhs); return m; }
