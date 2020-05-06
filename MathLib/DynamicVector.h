@@ -2,10 +2,11 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <type_traits>
 #include "MathLib.h"
 namespace MathLib 
 {
-	template <class T>
+	template <class T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 	class DynamicVector 
 	{
 	public:
@@ -13,8 +14,21 @@ namespace MathLib
 		DynamicVector(std::vector<T> coords) : m_coords(coords) {}
 		~DynamicVector() = default;
 
-		double length();
-		DynamicVector <double> normalise();
+		double length()
+		{
+			double sqSum = 0;
+			for (auto c : m_coords)
+				sqSum += (double)c * (double)c;
+			return sqrt(sqSum);
+		}
+		DynamicVector <double> normalise()
+		{
+			T length = this->length();
+			std::vector<double> vec;
+			for (auto c : m_coords)
+				vec.push_back((double)c / length);
+			return DynamicVector<double>(vec);
+		}
 
 		size_t size() const { return m_coords.size(); }
 		void push_back(T x) { m_coords.push_back(x); }
@@ -79,24 +93,4 @@ namespace MathLib
 	private:
 		std::vector<T> m_coords;
 	};
-
-	//IMPLEMENTATIONS ------------------------------------------------------
-
-	template <class T>
-	DynamicVector<double> DynamicVector<T>::normalise()
-	{
-		T length = this->length();
-		std::vector<double> vec;
-		for (auto c : m_coords)
-			vec.push_back((double)c / length);
-		return DynamicVector<double>(vec);
-	}
-	template <class T>
-	double DynamicVector<T>::length()
-	{
-		double sqSum = 0;
-		for (auto c : m_coords)
-			sqSum += (double)c * (double)c;
-		return sqrt(sqSum);
-	}
 }

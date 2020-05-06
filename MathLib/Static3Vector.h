@@ -1,7 +1,7 @@
 #pragma once
-
+#include <type_traits>
 namespace MathLib {
-	template <class T>
+	template <class T , typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 	class Static3Vector
 	{
 	public:
@@ -11,8 +11,22 @@ namespace MathLib {
 		Static3Vector(const Static3Vector& v) : m_coords{v[0], v[1], v[2]} {}
 		~Static3Vector() = default;
 		//functions------------------------------------------------------------------------------------------------------------------------------------------------------------
-		double length();
-		Static3Vector<double> normalise();
+		double length()
+		{
+			double l = 0;
+			for (int i = 0; i < this->size(); i++)
+				l += (double)(*this)[i] * (double)(*this)[i];
+			return sqrt(l);
+		}
+		Static3Vector<double> normalise()
+		{
+			T l = this->length();
+			Static3Vector<double> v;
+			v[0] = (double)(*this)[0] / l;
+			v[1] = (double)(*this)[1] / l;
+			v[2] = (double)(*this)[2] / l;
+			return v;
+		}
 		size_t size() { return sizeof(m_coords) / sizeof(m_coords[0]); }
 
 		//operators------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -39,24 +53,4 @@ namespace MathLib {
 	private:
 		T m_coords[3];
 	};
-	//function implementations-------------------------------------------------------------------------------------------------------------------------------------------------
-	template <class T>
-	double Static3Vector<T>::length() 
-	{ 
-		double l = 0; 
-		for (int i = 0; i < this->size(); i++) 
-			l += (*this)[i] * (*this)[i]; 
-		return sqrt(l); 
-	}
-	template <class T>
-	Static3Vector<double> Static3Vector<T>::normalise()
-	{
-		T l = this->length();
-		Static3Vector<double> v;
-		v[0] = (double)(*this)[0] / l;
-		v[1] = (double)(*this)[1] / l;
-		v[2] = (double)(*this)[2] / l;
-		return v;
-	}
-
 }
