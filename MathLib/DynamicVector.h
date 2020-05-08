@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <numeric>
 #include <type_traits>
-#include "MathLib.h"
 namespace MathLib 
 {
 	template <class T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>

@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <cmath>
-#include "DynamicVector.h"
 #include "Matrix3x3.h"
+#include "DynamicVector.h"
 namespace MathLib
 {
 	template <class T>
