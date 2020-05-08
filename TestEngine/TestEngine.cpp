@@ -4,7 +4,7 @@
 #define OLC_PGE_APPLICATION
 #include <iostream>
 #include "MathLib.h"
-#include "dependencies/olcPixelGameEngine/olcPixelGameEngine.h"
+#include "olcPixelGameEngine.h"
 
 class testEngine : public olc::PixelGameEngine
 {
