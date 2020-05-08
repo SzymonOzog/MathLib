@@ -1,7 +1,6 @@
 //the code here is just a test for MathLib, the code here is highly based on the code from 
 //here: https://github.com/OneLoneCoder/videos/blob/master/OneLoneCoder_olcEngine3D_Part1.cpp
 
-#define OLC_PGE_APPLICATION
 #include <iostream>
 #include "MathLib.h"
 #include "olcPixelGameEngine.h"

@@ -52,21 +52,21 @@ project "MathLibTest"
 		defines {"ML_RELEASE"}
 		optimize "On"
 		
-project "Foo"
-	location "Foo"
+project "TestEngine"
+	location "TestEngine"
 	kind "ConsoleApp"
 	language "C++"
 	
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("obj/" .. outputdir .. "/%{prj.name}")
 	
-	includedirs {"MathLib"}
+	includedirs {"MathLib", "%{prj.name}/dependencies/olcPixelGameEngine"}
 	
 	files{"%{prj.name}/**.h", "%{prj.name}/**.cpp"}
 	
 	cppdialect "C++17"
 	systemversion "latest"
-	
+	defines{"OLC_PGE_APPLICATION"}
 	filter "configurations:Debug"
 		defines {"ML_DEBUG"}
 		symbols "On"
