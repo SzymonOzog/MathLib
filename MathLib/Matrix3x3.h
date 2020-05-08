@@ -8,9 +8,9 @@ namespace MathLib
 	{
 	public:
 	//constructors---------------------------------------------------------------------------------------------------------------------------------------------------------
-		Matrix3x3() : m_rows{ Static3Vector<T>(), Static3Vector<T>(), Static3Vector<T>() } {}
+		Matrix3x3() : m_rows{} {}
 		Matrix3x3(Static3Vector<T> v1, Static3Vector<T> v2, Static3Vector<T> v3) : m_rows{ v1, v2, v3 } {}
-		Matrix3x3(T scalar) : m_rows{ Static3Vector(scalar, 0, 0), Static3Vector(0, scalar, 0), Static3Vector(0, 0, scalar) } {} //creates a scaled identity matrix
+		Matrix3x3(T scalar) : m_rows{ Static3Vector<T>(scalar, 0, 0), Static3Vector<T>(0, scalar, 0), Static3Vector<T>(0, 0, scalar) } {} //creates a scaled identity matrix
 		~Matrix3x3() = default;
 
 	//functions------------------------------------------------------------------------------------------------------------------------------------------------------------
