@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <numeric>
 #include <type_traits>
 #include "MathLib.h"
 namespace MathLib 
@@ -16,10 +17,7 @@ namespace MathLib
 
 		double length()
 		{
-			double sqSum = 0;
-			for (auto c : m_coords)
-				sqSum += (double)c * (double)c;
-			return sqrt(sqSum);
+			return sqrt(std::reduce(m_coords.begin(), m_coords.end(), 0.0, [](double result, double x) { return result + (x * x);}));
 		}
 		DynamicVector <double> normalise()
 		{

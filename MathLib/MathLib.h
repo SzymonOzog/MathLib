@@ -23,7 +23,7 @@ namespace MathLib
 		T dotProd = 0;
 		for (int i = 0; i < v1.size(); i++)
 			dotProd += v1[i] * v2[i];
-			return dotProd;
+		return dotProd;
 	}
 	template <class T>
 	T dotProduct(Static3Vector<T>& v1, Static3Vector<T>& v2)

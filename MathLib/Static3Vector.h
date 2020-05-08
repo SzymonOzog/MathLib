@@ -13,10 +13,7 @@ namespace MathLib {
 		//functions------------------------------------------------------------------------------------------------------------------------------------------------------------
 		double length()
 		{
-			double l = 0;
-			for (int i = 0; i < this->size(); i++)
-				l += (double)(*this)[i] * (double)(*this)[i];
-			return sqrt(l);
+			return sqrt(std::reduce(m_coords, m_coords + this->size(), 0.0, [](double result, double x) { return result + (x * x);}));
 		}
 		Static3Vector<double> normalise()
 		{
