@@ -85,9 +85,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Matrix3x3.h" />
-    <ClInclude Include="MathLib.h" />
     <ClInclude Include="DynamicVector.h" />
+    <ClInclude Include="MathLib.h" />
+    <ClInclude Include="Matrix3x3.h" />
     <ClInclude Include="Static3Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

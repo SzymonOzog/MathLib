@@ -37,7 +37,6 @@ project "MathLibTest"
 	pchsource "pch.cpp"
 	
 	includedirs {"MathLib"}
-	links {"MathLib"}
 	nuget{"Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn:1.8.1"}
 	
 	files{"%{prj.name}/**.h", "%{prj.name}/**.cpp"}
@@ -62,7 +61,6 @@ project "Foo"
 	objdir("obj/" .. outputdir .. "/%{prj.name}")
 	
 	includedirs {"MathLib"}
-	links {"MathLib"}
 	
 	files{"%{prj.name}/**.h", "%{prj.name}/**.cpp"}
 	
