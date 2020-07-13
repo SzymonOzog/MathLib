@@ -20,6 +20,32 @@ private:
 	float fRotX, fRotY;
 	float fZOffset;
 	float fRotSpeed;
+private:
+	void offsetToScreen(MathLib::Matrix3x3<float>& triangle)
+	{
+		triangle[0][2] += 3.0f;
+		triangle[1][2] += 3.0f;
+		triangle[2][2] += 3.0f;
+	}
+	void projectTo2D(MathLib::Matrix3x3<float>& triangle)
+	{
+		triangle = triangle * matProj;
+		triangle[0] /= triangle[0][2];
+		triangle[1] /= triangle[1][2];
+		triangle[2] /= triangle[2][2];
+	}
+	void scaleIntoView(MathLib::Matrix3x3<float>& triangle)
+	{
+		triangle[0][0] += 1.0f; triangle[0][1] += 1.0f;
+		triangle[1][0] += 1.0f; triangle[1][1] += 1.0f;
+		triangle[2][0] += 1.0f; triangle[2][1] += 1.0f;
+		triangle[0][0] *= 0.5f * (float)ScreenWidth();
+		triangle[0][1] *= 0.5f * (float)ScreenHeight();
+		triangle[1][0] *= 0.5f * (float)ScreenWidth();
+		triangle[1][1] *= 0.5f * (float)ScreenHeight();
+		triangle[2][0] *= 0.5f * (float)ScreenWidth();
+		triangle[2][1] *= 0.5f * (float)ScreenHeight();
+	}
 public:
 	bool OnUserCreate() override
 	{
@@ -61,14 +87,14 @@ public:
 			{0, fFovRad, 0 },
 			{0, 0,  fFar / (fFar - fNear) }
 		};
-		fRotX = 0.0f;
-		fRotY = 0.0f;
+		fRotX = 1.0f;
+		fRotY = 1.0f;
 		fZOffset = -(fFar * fNear) / (fFar - fNear);
 		fRotSpeed = 1.0f;
 		return true;
 	}
 	bool OnUserUpdate(float fElapsedTime) override
-	{	// Clear Screen
+	{
 		Clear(olc::VERY_DARK_BLUE);
 
 		if (GetKey(olc::UP).bHeld)
@@ -106,30 +132,12 @@ public:
 		for (auto tri : triangles)
 		{
 			MathLib::Matrix3x3<float> newTriangle = tri;
-			//rotate 
+
 			newTriangle = newTriangle * matRotX * matRotY;
 
-			//Offset into the screen
-			newTriangle[0][2] += 3.0f;
-			newTriangle[1][2] += 3.0f;
-			newTriangle[2][2] += 3.0f;
-
-			//Project from 3D to 2D
-			newTriangle = newTriangle * matProj;
-			newTriangle[0] /= newTriangle[0][2];
-			newTriangle[1] /= newTriangle[1][2];
-			newTriangle[2] /= newTriangle[2][2];
-
-			// Scale into view
-			newTriangle[0][0] += 1.0f; newTriangle[0][1] += 1.0f;
-			newTriangle[1][0] += 1.0f; newTriangle[1][1] += 1.0f;
-			newTriangle[2][0] += 1.0f; newTriangle[2][1] += 1.0f;
-			newTriangle[0][0] *= 0.5f * (float)ScreenWidth();
-			newTriangle[0][1] *= 0.5f * (float)ScreenHeight();
-			newTriangle[1][0] *= 0.5f * (float)ScreenWidth();
-			newTriangle[1][1] *= 0.5f * (float)ScreenHeight();
-			newTriangle[2][0] *= 0.5f * (float)ScreenWidth();
-			newTriangle[2][1] *= 0.5f * (float)ScreenHeight();
+			offsetToScreen(newTriangle);
+			projectTo2D(newTriangle);
+			scaleIntoView(newTriangle);
 
 			DrawTriangle(newTriangle[0][0], newTriangle[0][1],
 				newTriangle[1][0], newTriangle[1][1],
